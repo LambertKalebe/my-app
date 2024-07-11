@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+let booleanState = true; // Estado inicial do booleano
+
 export default function timeLoop(req: NextApiRequest, res: NextApiResponse) {
-    let number = 1
-    if (number == 1) {
-        res.status(200).json('Hello World! \n The number is 1 (true)');
-        res.send(true);
-        number = 2;
-    }  else {
-        res.status(200).json('Hello World! \n The number is 2 (false)');
-        res.send(false);
-        number = 1;
+    if (booleanState) {
+        res.status(200).json('Hello World! \n The boolean is true');
+    } else {
+        res.status(200).json('Hello World! \n The boolean is false');
     }
+
+    // Alternar o estado do booleano para o próximo ciclo
+    booleanState = !booleanState;
 }
