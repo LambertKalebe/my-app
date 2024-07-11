@@ -1,4 +1,4 @@
-export default function timeLoop() {
-    console.log("Hello world!");
-    console.log("This Mensagem is running every second");
-}
+export default function timeLoop(req, res) {
+    res.status(200).json({ text: 'Hello' });
+    console.log(req.body);
+  }
