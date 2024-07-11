@@ -1,0 +1,9 @@
+{
+    "crons": [
+        {
+
+            "path": "/lib/timeLoop",
+            "schedule": "* * * * *"
+        }
+    ]
+}
