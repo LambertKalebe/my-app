@@ -11,5 +11,4 @@ export default function timeLoop(req: NextApiRequest, res: NextApiResponse) {
 
     // Alternar o estado do booleano para o próximo ciclo
     booleanState = !booleanState;
-    res.send(booleanState);
 }
