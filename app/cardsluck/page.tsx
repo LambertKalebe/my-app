@@ -1,14 +1,15 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar } from "@/components/component/navbar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import saveVote from '@/lib/saveVote'; // Importa a função saveVote
+import saveVote, { checkIfAlreadyVoted, checkVoteCount } from '@/lib/saveVote'; // Importa a função saveVote
 import checkMoney from '@/lib/checkMoney';
 
 export default function CardsLuckPage() {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
+  const [isConfirmDisabled, setIsConfirmDisabled] = useState<boolean>(false);
 
   const handleCardClick = (card: string) => {
     setSelectedCard(card);
@@ -25,8 +26,10 @@ export default function CardsLuckPage() {
       const betAmount = parseInt(selectedButton);
       if (betAmount > userMoney) {
         alert('Você não tem dinheiro suficiente para essa aposta.');
+      } else if (await checkIfAlreadyVoted()) {
+        setIsConfirmDisabled(true);
       } else {
-        saveVote(selectedCard, betAmount); // Replace 'uuid-do-usuario' with the actual user UUID
+        await saveVote(selectedCard, betAmount); // Certifique-se de aguardar a função saveVote
         // Clear the selections after saving
         setSelectedCard(null);
         setSelectedButton(null);
@@ -46,6 +49,17 @@ export default function CardsLuckPage() {
       selectedButton === button ? 'bg-blue-500 text-white transform scale-105' : ''
     }`;
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        checkVoteCount();
+      }
+    }, 1000); // Verifica a cada 1 segundos
+
+    // Limpa o intervalo ao desmontar o componente
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -56,24 +70,21 @@ export default function CardsLuckPage() {
           </div>
           <div className="flex justify-center">
             <div className="grid grid-cols-3 gap-4">
-              <div className="transform -rotate-3" onClick={() => handleCardClick('red')}>
-                <Card className={`bg-red-500 text-red-900 hover:bg-red-400 ${cardClasses('red')}`} style={{ backgroundImage: "url('/images/red-background.jpg')" }}>
+              <div className="transform -rotate-3" onClick={() => handleCardClick('blue')}>
+                <Card className={`bg-blue-500 text-blue-900 hover:bg-blue-400 ${cardClasses('blue')}`} style={{ backgroundImage: "url('/blue.png')" }}>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
-                    <span className="text-4xl font-semibold">Red</span>
                   </CardContent>
                 </Card>
               </div>
-              <div className="z-10 transform scale-110" onClick={() => handleCardClick('blue')}>
-                <Card className={`bg-blue-500 text-blue-900 hover:bg-blue-400 ${cardClasses('blue')}`} style={{ backgroundImage: "url('/images/blue-background.jpg')" }}>
+              <div className="z-10 transform scale-110" onClick={() => handleCardClick('red')}>
+                <Card className={`bg-red-500 text-red-900 hover:bg-red-400 ${cardClasses('red')}`} style={{ backgroundImage: "url('/red.png')" }}>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
-                    <span className="text-4xl font-semibold">Blue</span>
                   </CardContent>
                 </Card>
               </div>
               <div className="transform rotate-3" onClick={() => handleCardClick('yellow')}>
-                <Card className={`bg-yellow-500 text-yellow-900 hover:bg-yellow-400 ${cardClasses('yellow')}`} style={{ backgroundImage: "url('/espadass.jpg')" }}>
+                <Card className={`bg-yellow-500 text-yellow-900 hover:bg-yellow-400 ${cardClasses('yellow')}`} style={{ backgroundImage: "url('/yellow.png')" }}>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
-                    <span className="text-4xl font-semibold">Yellow</span>
                   </CardContent>
                 </Card>
               </div>
@@ -86,7 +97,7 @@ export default function CardsLuckPage() {
                 <Button className={buttonClasses('25')} onClick={() => handleButtonClick('25')}>25</Button>
                 <Button variant="ghost" disabled className="w-full max-w-[150px]"></Button>
                 <Button className={buttonClasses('50')} onClick={() => handleButtonClick('50')}>50</Button>
-                <Button className={buttonClasses('confirm')} onClick={handleConfirmClick}>Confirmar</Button>
+                <Button className={buttonClasses('confirm')} onClick={handleConfirmClick} disabled={isConfirmDisabled}>Confirmar</Button>
                 <Button className={buttonClasses('75')} onClick={() => handleButtonClick('75')}>75</Button>
                 <Button variant="ghost" disabled className="w-full max-w-[150px]"></Button>
               </div>
