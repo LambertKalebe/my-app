@@ -2,7 +2,7 @@ import './globals.css'
 import { Poppins } from 'next/font/google'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/react"
-const inter = Poppins ({ weight: "800" })
+const inter = Poppins ({ weight: "800", preload: false })
 
 export const metadata = {
   title: 'Mostra',
