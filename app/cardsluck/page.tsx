@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Navbar } from "@/components/component/navbar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import saveVote, { checkIfAlreadyVoted, checkVoteCount } from '@/lib/saveVote'; // Importa a função saveVote
+import saveVote, { checkIfAlreadyVoted, checkVoteCount } from '@/lib/gameManipuler'; // Importa a função saveVote
 import checkMoney from '@/lib/checkMoney';
 
 export default function CardsLuckPage() {
@@ -17,7 +17,7 @@ export default function CardsLuckPage() {
 
   const handleButtonClick = (button: string) => {
     setSelectedButton(button);
-  };
+  }
 
   const handleConfirmClick = async () => {
     const userMoney = await checkMoney(); // Use 'await' to get the value from the Promise
