@@ -20,12 +20,6 @@ export function Navbar() {
   return (
     <header className="bg-background border-b px-4 lg:px-6 h-14 flex items-center justify-between">
       <Link href="/" className="flex items-center gap-2" prefetch={false}>
-        <Image
-          src="/lionIcon.svg"
-          width={50}
-          height={50}
-          alt="Icone"
-        />
         <span className="text-lg font-semibold">MOSTRA</span>
       </Link>
       <div>

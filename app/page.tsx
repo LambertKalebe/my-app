@@ -24,11 +24,11 @@ export default function Home() {
           <Link href="/cardsluck" className="w-full h-full">
             <div className="relative group overflow-hidden rounded-lg">
               <Image
-                src="/placeholder.svg"
+                src="/iconGame.png"
                 alt="Game Wallpaper"
-                width={200}
-                height={200}
-                className="aspect-square object-cover w-full"
+                width={500}
+                height={500}
+                className="aspect-square object-cover w-full h-full bg-color"
               />
               <div className="absolute inset-0 bg-primary/50 opacity-0 transition-opacity group-hover:opacity-100 flex items-center justify-center">
                 <span className="text-primary-foreground font-medium">Jogar</span>

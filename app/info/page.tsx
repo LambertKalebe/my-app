@@ -53,7 +53,7 @@ export default function Info() {
             </div>
           </div>
         </div>
-        <div className="mt-8 md:mt-12 grid gap-8 justify-center md:grid-cols-2 lg:grid-cols-2">
+        <div className="mt-8 md:mt-12 grid gap-8 justify-center md:grid-cols-3 lg:grid-cols-3">
           <div className="flex mt-8 flex-col items-center justify-center">
             <Image
               src="/placeholder.svg"
@@ -92,6 +92,33 @@ export default function Info() {
             <div className="mt-4 text-center">
               <h3 className="text-xl font-bold">Eduan</h3>
               <p className="text-muted-foreground">Assistente na criação do Site.</p>
+              <div className="mt-4 flex gap-4">
+                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
+                  <TwitterIcon className="h-6 w-6" />
+                </Link>
+                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
+                  <InstagramIcon className="h-6 w-6" />
+                </Link>
+                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
+                  <LinkedinIcon className="h-6 w-6" />
+                </Link>
+                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
+                  <GitlabIcon className="h-6 w-6" />
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-center">
+            <Image
+              src="/placeholder.svg"
+              width={300}
+              height={300}
+              alt="Assistente 2"
+              className="w-full max-w-[300px] rounded-lg"
+            />
+            <div className="mt-4 text-center">
+              <h3 className="text-xl font-bold">Natalia</h3>
+              <p className="text-muted-foreground">Artista.</p>
               <div className="mt-4 flex gap-4">
                 <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
                   <TwitterIcon className="h-6 w-6" />

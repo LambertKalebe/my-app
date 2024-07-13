@@ -71,19 +71,19 @@ export default function CardsLuckPage() {
           <div className="flex justify-center">
             <div className="grid grid-cols-3 gap-4">
               <div className="transform -rotate-3" onClick={() => handleCardClick('blue')}>
-                <Card className={`bg-blue-500 text-blue-900 hover:bg-blue-400 ${cardClasses('blue')}`} style={{ backgroundImage: "url('/blue.png')" }}>
+                <Card className={`bg-bluee text-blue-900 shadow-current shadow-xl ${cardClasses('blue')}`} style={{ backgroundImage: "url('/blue.png')" }}>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
                   </CardContent>
                 </Card>
               </div>
               <div className="z-10 transform scale-110" onClick={() => handleCardClick('red')}>
-                <Card className={`bg-red-500 text-red-900 hover:bg-red-400 ${cardClasses('red')}`} style={{ backgroundImage: "url('/red.png')" }}>
+                <Card className={`bg-redd text-red-900 shadow-current shadow-xl ${cardClasses('red')}`} style={{ backgroundImage: "url('/red.png')" }}>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
                   </CardContent>
                 </Card>
               </div>
               <div className="transform rotate-3" onClick={() => handleCardClick('yellow')}>
-                <Card className={`bg-yellow-500 text-yellow-900 hover:bg-yellow-400 ${cardClasses('yellow')}`} style={{ backgroundImage: "url('/yellow.png')" }}>
+                <Card className={`bg-yelloww text-yellow-900 shadow-current shadow-xl ${cardClasses('yellow')}`} style={{ backgroundImage: "url('/yellow.png')" }}>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
                   </CardContent>
                 </Card>
