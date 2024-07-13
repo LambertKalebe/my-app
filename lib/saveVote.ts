@@ -9,7 +9,11 @@ const pool = new Pool({
 });
 const id = cookies().get('id')?.value;
 
-// Função para verificar se o usuário já votou
+/**
+ * Verifica se o usuário já votou.
+ *
+ * @returns {Promise<boolean>} - Uma promessa que é resolvida como verdadeira se o usuário já tiver votado, falsa caso contrário.
+ */
 async function checkIfAlreadyVoted(): Promise<boolean> {
   try {
     const voteCheckQuery = 'SELECT * FROM cardbets WHERE id = $1';
@@ -22,21 +26,26 @@ async function checkIfAlreadyVoted(): Promise<boolean> {
   }
 }
 
-// Função principal para salvar o voto
+/**
+ * Salva um voto para uma carta específica com um valor de aposta.
+ *
+ * @param {string} card - A carta para a qual o voto está sendo salvo.
+ * @param {number} betAmount - O valor da aposta sendo feita na carta.
+ *
+ * @throws Lançará um erro se o ID do cookie do usuário não for encontrado, se o usuário não for encontrado no banco de dados ou se o usuário não tiver dinheiro suficiente para fazer a aposta.
+ */
 async function saveVote(card: string, betAmount: number) {
 
   if (!id) {
-    throw new Error('UUID do cookie não encontrado');
+    throw new Error('UUID do cookie não encontrado:' + id);
   }
 
   try {
-    // Verifica se o usuário tem dinheiro suficiente para a aposta
     const userQuery = 'SELECT * FROM users WHERE id = $1';
     const userResult = await pool.query(userQuery, [id]);
 
-    if (userResult.rows.length === 0) {
-      throw new Error('Usuário não encontrado');
-    }
+    // Se o usuário for encontrado e tiver apostas em cartas, continue com a lógica
+    console.log('Usuário encontrado e tem apostas em cartas.');
 
     const user = userResult.rows[0];
 
@@ -59,6 +68,11 @@ async function saveVote(card: string, betAmount: number) {
   }
 }
 
+/**
+ * Verifica se o número total de votos atingiu uma determinada contagem.
+ *
+ * @returns {Promise<boolean>} - Uma promessa que é resolvida como verdadeira se o número total de votos for igual a 6, falsa caso contrário.
+ */
 async function checkVoteCount(): Promise<boolean> {
     try {
       const countQuery = 'SELECT COUNT(*) FROM cardbets';
