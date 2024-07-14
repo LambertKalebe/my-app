@@ -9,7 +9,7 @@ export async function checkUser() {
 
   if (!id) {
     const userUUID = uuidv4();
-    cookies().set('id', userUUID, { path: '/' });
+    cookies().set('id', userUUID);
     console.log("Resultado da Busca dos Cookies:" + id);
     console.log("Cookie não encontrado, criando um com o ID: " + userUUID);
     redirect('/login');
