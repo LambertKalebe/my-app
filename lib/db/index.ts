@@ -1,8 +1,7 @@
 // db.js
 'use server';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-
-const mongoUrl = process.env.MONGO_URL;
+const mongoUrl = "mongodb+srv://default:default@mostra.cxqgmfz.mongodb.net/?retryWrites=true&w=majority&appName=Mostra";
 
 if (!mongoUrl) {
   throw new Error('MongoDB URL is not defined.');
