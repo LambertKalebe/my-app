@@ -3,12 +3,12 @@ import { cookies } from 'next/headers';
 import { v4 as uuidv4 } from 'uuid';
 import { redirect } from 'next/navigation';
 import { getDatabase } from './mongo';
-const id = cookies().get('id')?.value?.toString();
+const id = cookies().get('id')?.value;
 export async function checkUser() {
 
   if (!id) {
     const userUUID = uuidv4();
-    cookies().set('id', userUUID, { path: '/' });
+    cookies().set('id', userUUID,);
     console.log("Cookie não encontrado, criando um com o ID: " + userUUID);
     redirect('/login');
   }
@@ -40,14 +40,8 @@ async function createUser(name: string) {
     const db = await getDatabase();
     const usersCollection = db.collection('users');
 
-    const userId = cookies().get('id')?.value?.toString();
-    if (!userId) {
-      console.log('ID não encontrado nos cookies.');
-      return;
-    }
-
     const newUser = {
-      id: userId,
+      id,
       name,
       money: 100,
     };
