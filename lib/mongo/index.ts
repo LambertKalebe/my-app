@@ -7,6 +7,10 @@ let mongoClient: MongoClient | null = null;
 
 async function getMongoClient(): Promise<MongoClient> {
   if (!mongoClient) {
+    if (!mongoUrl) {
+      throw new Error('MONGO_URI is not defined');
+    }
+
     mongoClient = new MongoClient(mongoUrl, {
       serverApi: {
         version: ServerApiVersion.v1,
