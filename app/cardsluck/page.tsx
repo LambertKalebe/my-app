@@ -4,7 +4,7 @@ import { Navbar } from "@/components/component/navbar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import saveVote, { checkIfAlreadyVoted, checkVoteCount } from '@/lib/gameManipuler'; // Importa a função saveVote
-import { checkMoney } from '@/lib/userDataManipuler';
+import checkMoney from '@/lib/checkMoney';
 
 export default function CardsLuckPage() {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);

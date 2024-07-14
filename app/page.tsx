@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image"
 import { useEffect } from "react";
-import checkUser from "@/lib/userDataManipuler";
+import checkUser from "@/lib/checkUser";
 import { Navbar } from '@/components/component/navbar'
 
 export default function Home() {

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRef } from "react";;
-import { createUser } from "@/lib/userDataManipuler";
+import createUser from "@/lib/createNewUser";
 
 export default function Login() {
     const usernameRef = useRef<HTMLInputElement>(null);
