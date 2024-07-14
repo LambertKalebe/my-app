@@ -40,8 +40,14 @@ async function createUser(name: string) {
     const db = await getDatabase();
     const usersCollection = db.collection('users');
 
+    const userId = cookies().get('id')?.value?.toString();
+    if (!userId) {
+      console.log('ID não encontrado nos cookies.');
+      return;
+    }
+
     const newUser = {
-      id,
+      id: userId,
       name,
       money: 100,
     };
