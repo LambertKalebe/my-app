@@ -2,9 +2,8 @@
 import Link from "next/link"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
 import { useState, useEffect } from "react"
-import checkMoney from "@/lib/checkMoney"
+import { checkMoney } from "@/lib/userDataManipuler"
 
 export function Navbar() {
   const [money, setMoney] = useState(100); // initialize money state to 100

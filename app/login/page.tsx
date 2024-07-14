@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRef } from "react";;
-import createNewUser from "@/lib/createNewUser";
+import { createUser } from "@/lib/userDataManipuler";
 
 export default function Login() {
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -14,7 +14,7 @@ export default function Login() {
         event.preventDefault();
         const username = usernameRef.current?.value;
         if (username) {
-            createNewUser(username);
+            createUser(username);
         } else {
             console.error("Username is required");
         }

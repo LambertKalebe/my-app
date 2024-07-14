@@ -1,24 +1,10 @@
-'use server'
+'use server';
 import { cookies } from "next/headers";
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://default:default@mostra.cxqgmfz.mongodb.net/?appName=Mostra";
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const mongoClient = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-/**
- * Verifica se o usuário já votou.
- *
- * @returns {Promise<boolean>} - Uma promessa que é resolvida como verdadeira se o usuário já tiver votado, falsa caso contrário.
- */
+import { getDatabase } from "./mongo";
+
 async function checkIfAlreadyVoted(): Promise<boolean> {
   try {
-    await mongoClient.connect();
-    const db = mongoClient.db();
+    const db = await getDatabase();
     const cardbetsCollection = db.collection('cardbets');
     const id = cookies().get('id')?.value;
 
@@ -27,19 +13,9 @@ async function checkIfAlreadyVoted(): Promise<boolean> {
   } catch (error) {
     console.error('Erro ao verificar o voto:', error);
     throw error;
-  } finally {
-    await mongoClient.close();
   }
 }
 
-/**
- * Salva um voto para uma carta específica com um valor de aposta.
- *
- * @param {string} card - A carta para a qual o voto está sendo salvo.
- * @param {number} betAmount - O valor da aposta sendo feita na carta.
- *
- * @throws Lançará um erro se o ID do cookie do usuário não for encontrado, se o usuário não for encontrado no banco de dados ou se o usuário não tiver dinheiro suficiente para fazer a aposta.
- */
 async function saveVote(card: string, betAmount: number) {
   const id = cookies().get('id')?.value;
 
@@ -48,8 +24,7 @@ async function saveVote(card: string, betAmount: number) {
   }
 
   try {
-    await mongoClient.connect();
-    const db = mongoClient.db();
+    const db = await getDatabase();
     const usersCollection = db.collection('users');
     const cardbetsCollection = db.collection('cardbets');
 
@@ -73,20 +48,12 @@ async function saveVote(card: string, betAmount: number) {
   } catch (error) {
     console.error('Erro ao salvar o voto:', error);
     throw error;
-  } finally {
-    await mongoClient.close();
   }
 }
 
-/**
- * Verifica se o número total de votos atingiu uma determinada contagem.
- *
- * @returns {Promise<boolean>} - Uma promessa que é resolvida como verdadeira se o número total de votos for igual a 6, falsa caso contrário.
- */
 async function checkVoteCount(): Promise<boolean> {
   try {
-    await mongoClient.connect();
-    const db = mongoClient.db();
+    const db = await getDatabase();
     const cardbetsCollection = db.collection('cardbets');
 
     const count = await cardbetsCollection.countDocuments({});
@@ -94,10 +61,8 @@ async function checkVoteCount(): Promise<boolean> {
   } catch (error) {
     console.error('Erro ao contar votos:', error);
     throw error;
-  } finally {
-    await mongoClient.close();
   }
 }
 
 export default saveVote;
-export { checkIfAlreadyVoted, checkVoteCount };
+export { checkIfAlreadyVoted, checkVoteCount};
