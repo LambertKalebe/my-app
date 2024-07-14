@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { v4 as uuidv4 } from 'uuid';
 import { redirect } from 'next/navigation';
 import { getDatabase } from './mongo';
-const id = cookies().get('id')?.value.toString();
+const id = cookies().get('id')?.value?.toString();
 export async function checkUser() {
 
   if (!id) {
