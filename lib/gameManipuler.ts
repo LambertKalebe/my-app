@@ -1,14 +1,15 @@
 'use server'
 import { cookies } from "next/headers";
-import pg from 'pg';
-
-const { Pool } = pg;
-
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://default:default@mostra.cxqgmfz.mongodb.net/?appName=Mostra";
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const mongoClient = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
 });
-const id = cookies().get('id')?.value;
-
 /**
  * Verifica se o usuário já votou.
  *
@@ -16,13 +17,18 @@ const id = cookies().get('id')?.value;
  */
 async function checkIfAlreadyVoted(): Promise<boolean> {
   try {
-    const voteCheckQuery = 'SELECT * FROM cardbets WHERE id = $1';
-    const voteCheckResult = await pool.query(voteCheckQuery, [id]);
+    await mongoClient.connect();
+    const db = mongoClient.db();
+    const cardbetsCollection = db.collection('cardbets');
+    const id = cookies().get('id')?.value;
 
-    return voteCheckResult.rows.length > 0;
+    const voteCheckResult = await cardbetsCollection.findOne({ id });
+    return voteCheckResult !== null;
   } catch (error) {
     console.error('Erro ao verificar o voto:', error);
     throw error;
+  } finally {
+    await mongoClient.close();
   }
 }
 
@@ -35,36 +41,40 @@ async function checkIfAlreadyVoted(): Promise<boolean> {
  * @throws Lançará um erro se o ID do cookie do usuário não for encontrado, se o usuário não for encontrado no banco de dados ou se o usuário não tiver dinheiro suficiente para fazer a aposta.
  */
 async function saveVote(card: string, betAmount: number) {
+  const id = cookies().get('id')?.value;
 
   if (!id) {
     throw new Error('UUID do cookie não encontrado:' + id);
   }
 
   try {
-    const userQuery = 'SELECT * FROM users WHERE id = $1';
-    const userResult = await pool.query(userQuery, [id]);
+    await mongoClient.connect();
+    const db = mongoClient.db();
+    const usersCollection = db.collection('users');
+    const cardbetsCollection = db.collection('cardbets');
 
-    // Se o usuário for encontrado e tiver apostas em cartas, continue com a lógica
-    console.log('Usuário encontrado e tem apostas em cartas.');
+    const user = await usersCollection.findOne({ id });
 
-    const user = userResult.rows[0];
+    if (!user) {
+      throw new Error('Usuário não encontrado no banco de dados');
+    }
 
     if (user.money < betAmount) {
       throw new Error('Dinheiro insuficiente para a aposta');
     }
 
     // Subtrai o valor da aposta do dinheiro do usuário
-    const updateUserQuery = 'UPDATE users SET money = $1 WHERE id = $2';
-    await pool.query(updateUserQuery, [user.money - betAmount, id]);
+    await usersCollection.updateOne({ id }, { $inc: { money: -betAmount } });
 
     // Insere o voto na tabela cardbets
-    const insertVoteQuery = 'INSERT INTO cardbets (card, id, bet) VALUES ($1, $2, $3)';
-    await pool.query(insertVoteQuery, [card, id, betAmount]);
+    await cardbetsCollection.insertOne({ card, id, bet: betAmount });
 
     console.log('Voto salvo com sucesso!');
   } catch (error) {
     console.error('Erro ao salvar o voto:', error);
     throw error;
+  } finally {
+    await mongoClient.close();
   }
 }
 
@@ -74,18 +84,20 @@ async function saveVote(card: string, betAmount: number) {
  * @returns {Promise<boolean>} - Uma promessa que é resolvida como verdadeira se o número total de votos for igual a 6, falsa caso contrário.
  */
 async function checkVoteCount(): Promise<boolean> {
-    try {
-      const countQuery = 'SELECT COUNT(*) FROM cardbets';
-      const countResult = await pool.query(countQuery);
-      const count = parseInt(countResult.rows[0].count, 10);
-  
-      return count === 6;
-    } catch (error) {
-      console.error('Erro ao contar votos:', error);
-      throw error;
-    }
-  }
+  try {
+    await mongoClient.connect();
+    const db = mongoClient.db();
+    const cardbetsCollection = db.collection('cardbets');
 
+    const count = await cardbetsCollection.countDocuments({});
+    return count === 6;
+  } catch (error) {
+    console.error('Erro ao contar votos:', error);
+    throw error;
+  } finally {
+    await mongoClient.close();
+  }
+}
 
 export default saveVote;
 export { checkIfAlreadyVoted, checkVoteCount };

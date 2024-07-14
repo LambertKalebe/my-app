@@ -1,15 +1,17 @@
 'use server';
 import { cookies } from 'next/headers';
-import pg from 'pg';
-
-const { Pool } = pg;
-
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://default:default@mostra.cxqgmfz.mongodb.net/?appName=Mostra";
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const mongoClient = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
 });
 
 async function checkMoney() {
-  // Obtenha o valor do cookie 'id' dentro da função assíncrona
   const id = cookies().get('id')?.value;
 
   if (!id) {
@@ -18,12 +20,15 @@ async function checkMoney() {
   }
 
   try {
-    const query = 'SELECT money FROM users WHERE id = $1';
-    const result = await pool.query(query, [id]);
+    await mongoClient.connect();
+    const db = mongoClient.db();
+    const usersCollection = db.collection('users');
 
-    if (result.rows.length > 0) {
-      console.log("DINHEIRO: " + result.rows[0].money);
-      return result.rows[0].money;
+    const user = await usersCollection.findOne({ id }, { projection: { money: 1 } });
+
+    if (user) {
+      console.log("DINHEIRO: " + user.money);
+      return user.money
     } else {
       console.log('Usuário não encontrado.');
       return null;
@@ -31,7 +36,9 @@ async function checkMoney() {
   } catch (error) {
     console.error('Erro ao ler dinheiro do usuário:', error);
     return null;
+  } finally {
+    await mongoClient.close();
   }
 }
 
-export default checkMoney;
+export default checkMoney

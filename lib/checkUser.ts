@@ -1,13 +1,15 @@
 'use server';
 import { cookies } from 'next/headers';
 import { v4 as uuidv4 } from 'uuid';
-import pg from 'pg';
 import { redirect } from 'next/navigation';
-
-const { Pool } = pg;
-
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://default:default@mostra.cxqgmfz.mongodb.net/?appName=Mostra";
+const mongoClient = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
 });
 
 export async function checkUser() {
@@ -21,19 +23,27 @@ export async function checkUser() {
   }
 
   try {
-    const query = 'SELECT * FROM users WHERE id = $1';
-    const result = await pool.query(query, [id]);
+    await mongoClient.connect();
+    const db = mongoClient.db();
+    const usersCollection = db.collection('users');
 
-    if (result.rows.length === 0) {
+    const user = await usersCollection.findOne({ id });
+
+    if (!user) {
       console.log('Usuário não encontrado.');
     } else {
-      const user = result.rows[0];
-      const UUIDUserAndData = { uuid: id, user };
-      return UUIDUserAndData;
+      const userData = {
+        id: user.id,
+        name: user.name,
+        money: user.money,
+      };
+      return userData;
     }
   } catch (error) {
     console.error('Erro (checkUser.ts):', error);
     throw error;
+  } finally {
+    await mongoClient.close();
   }
 }
 

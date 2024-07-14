@@ -1,23 +1,35 @@
 'use server';
 import { cookies } from 'next/headers';
-import pg from 'pg';
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://default:default@mostra.cxqgmfz.mongodb.net/?appName=Mostra";
+const mongoClient = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
-const { Pool } = pg;
-
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
-})
-
-
-async function createUser(name:string) {
+async function createUser(name: string) {
   const id = cookies().get('id')?.value;
   try {
-    const query = 'INSERT INTO users (id, name, money) VALUES ($1, $2, $3)';
-    const values = [id, name, 100];
-    const result = await pool.query(query, values);
-    console.log('Novo usuário criado com sucesso:', result.rows[0]);
+    await mongoClient.connect();
+    const db = mongoClient.db();
+    const usersCollection = db.collection('users');
+
+    const newUser = {
+      id,
+      name,
+      money: 100,
+    };
+
+    const result = await usersCollection.insertOne(newUser);
+    console.log('Novo usuário criado com sucesso:', result.insertedId);
   } catch (error) {
     console.error('Erro ao criar novo usuário:', error);
+  } finally {
+    await mongoClient.close();
   }
 }
+
 export default createUser;
