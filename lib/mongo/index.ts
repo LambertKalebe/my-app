@@ -2,7 +2,7 @@
 'use server';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const mongoUrl = process.env.MONGO_URI;
+const mongoUrl = process.env.MONGO_URI as string;
 
 let mongoClient: MongoClient | null = null;
 
