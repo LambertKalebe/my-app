@@ -1,8 +1,7 @@
 // db.js
 'use server';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-
-const mongoUrl = process.env.MONGO_URI as string;
+const mongoUrl = process.env.MONGO_URI! as string; // Type assertion to ensure it's not undefined
 
 let mongoClient: MongoClient | null = null;
 
