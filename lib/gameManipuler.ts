@@ -1,11 +1,12 @@
 'use server';
 import { cookies } from "next/headers";
-import { getDatabase } from "./mongo";
-const id = cookies().get('id')?.value?.toString();
+import { getDatabase } from './db';
+
 async function checkIfAlreadyVoted(): Promise<boolean> {
   try {
-    const db = await getDatabase();
+    const db = await getDatabase('your-database-name');
     const cardbetsCollection = db.collection('cardbets');
+    const id = cookies().get('id')?.value;
 
     const voteCheckResult = await cardbetsCollection.findOne({ id });
     return voteCheckResult !== null;
@@ -23,7 +24,7 @@ async function saveVote(card: string, betAmount: number) {
   }
 
   try {
-    const db = await getDatabase();
+    const db = await getDatabase('your-database-name');
     const usersCollection = db.collection('users');
     const cardbetsCollection = db.collection('cardbets');
 
@@ -52,7 +53,7 @@ async function saveVote(card: string, betAmount: number) {
 
 async function checkVoteCount(): Promise<boolean> {
   try {
-    const db = await getDatabase();
+    const db = await getDatabase('your-database-name');
     const cardbetsCollection = db.collection('cardbets');
 
     const count = await cardbetsCollection.countDocuments({});
@@ -64,4 +65,4 @@ async function checkVoteCount(): Promise<boolean> {
 }
 
 export default saveVote;
-export { checkIfAlreadyVoted, checkVoteCount};
+export { checkIfAlreadyVoted, checkVoteCount }

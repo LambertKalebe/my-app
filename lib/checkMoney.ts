@@ -1,6 +1,6 @@
 'use server';
 import { cookies } from 'next/headers';
-import { getDatabase } from './mongo';
+import { getDatabase } from './db';
 
 async function checkMoney() {
   const id = cookies().get('id')?.value;
@@ -11,7 +11,7 @@ async function checkMoney() {
   }
 
   try {
-    const db = await getDatabase();
+    const db = await getDatabase('your-database-name');
     const usersCollection = db.collection('users');
 
     const user = await usersCollection.findOne({ id }, { projection: { money: 1 } });
