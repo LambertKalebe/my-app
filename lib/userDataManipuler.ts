@@ -3,9 +3,8 @@ import { cookies } from 'next/headers';
 import { v4 as uuidv4 } from 'uuid';
 import { redirect } from 'next/navigation';
 import { getDatabase } from './mongo';
-
+const id = cookies().get('id')?.value.toString();
 export async function checkUser() {
-  const id = cookies().get('id')?.value;
 
   if (!id) {
     const userUUID = uuidv4();
@@ -37,7 +36,6 @@ export async function checkUser() {
 }
 
 async function createUser(name: string) {
-  const id = cookies().get('id')?.value;
   try {
     const db = await getDatabase();
     const usersCollection = db.collection('users');
@@ -56,7 +54,6 @@ async function createUser(name: string) {
 }
 
 async function checkMoney() {
-  const id = cookies().get('id')?.value;
 
   if (!id) {
     console.log('ID não encontrado nos cookies.');

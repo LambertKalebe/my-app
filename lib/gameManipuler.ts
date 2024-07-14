@@ -1,12 +1,11 @@
 'use server';
 import { cookies } from "next/headers";
 import { getDatabase } from "./mongo";
-
+const id = cookies().get('id')?.value.toString();
 async function checkIfAlreadyVoted(): Promise<boolean> {
   try {
     const db = await getDatabase();
     const cardbetsCollection = db.collection('cardbets');
-    const id = cookies().get('id')?.value;
 
     const voteCheckResult = await cardbetsCollection.findOne({ id });
     return voteCheckResult !== null;
