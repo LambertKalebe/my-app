@@ -2,16 +2,9 @@
 'use client'
 import Link from "next/link";
 import Image from "next/image"
-import { useEffect } from "react";
-import checkUser from "@/lib/checkUser";
 import { Navbar } from '@/components/component/navbar'
 
 export default function Home() {
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      checkUser(); 
-    }
-  }, []);
   return (
     <>
     <Navbar />

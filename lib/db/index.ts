@@ -24,9 +24,9 @@ async function getMongoClient(): Promise<MongoClient> {
   return mongoClient;
 }
 
-async function getDatabase(name: string): Promise<any> {
+async function getDatabase(): Promise<any> {
   const client = await getMongoClient();
-  return client.db(name);
+  return client.db("mostra");
 }
 
 export { getDatabase };

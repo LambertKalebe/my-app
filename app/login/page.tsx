@@ -3,9 +3,8 @@ import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { useRef } from "react";;
-import createUser from "@/lib/createNewUser";
+import { createUser } from "@/lib/userManager";
 
 export default function Login() {
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -15,6 +14,7 @@ export default function Login() {
         const username = usernameRef.current?.value;
         if (username) {
             createUser(username);
+            
         } else {
             console.error("Username is required");
         }
@@ -37,7 +37,7 @@ export default function Login() {
                                 <Label htmlFor="username">Username</Label>
                                 <Input id="username" type="text" placeholder="Enter your username" ref={usernameRef} />
                             </div>
-                            <Button className="w-full" onClick={handleLogin}><Link href='/' className="w-full h-full">Login</Link></Button>
+                            <Button className="w-full" onClick={handleLogin}>Login</Button>
                         </div>
                     </div>
                     <div className="hidden md:flex flex-col items-center justify-center">

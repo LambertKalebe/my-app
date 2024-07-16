@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { Navbar } from "@/components/component/navbar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import saveVote, { checkIfAlreadyVoted, checkVoteCount } from '@/lib/gameManipuler'; // Importa a função saveVote
-import checkMoney from '@/lib/checkMoney';
+import saveVote, { checkIfAlreadyVoted, VoteCount } from '@/lib/gameManipuler'; // Importa a função saveVote
+import { checkMoney } from '@/lib/userManager';
 
 export default function CardsLuckPage() {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
@@ -48,17 +48,6 @@ export default function CardsLuckPage() {
     `w-full max-w-[150px] transition-all duration-300 ${
       selectedButton === button ? 'bg-blue-500 text-white transform scale-105' : ''
     }`;
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (document.visibilityState === 'visible') {
-        checkVoteCount();
-      }
-    }, 1000); // Verifica a cada 1 segundos
-
-    // Limpa o intervalo ao desmontar o componente
-    return () => clearInterval(intervalId);
-  }, []);
 
   return (
     <>
