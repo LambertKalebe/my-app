@@ -10,7 +10,7 @@ import saveVote, {
 } from "@/lib/gameManipuler";
 import { checkMoney } from "@/lib/userManager";
 
-export function CardsLuckPage() {
+export default function CardsLuckPage() {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
   const [isConfirmDisabled, setIsConfirmDisabled] = useState<boolean>(false);
@@ -183,5 +183,3 @@ export function CardsLuckPage() {
     </>
   );
 }
-
-export default CardsLuckPage;

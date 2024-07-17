@@ -65,7 +65,7 @@ async function VoteCount(): Promise<boolean> {
   const db = await getDatabase();
   const cardbetsCollection = db.collection('cardbets');
   const votesCount = await cardbetsCollection.countDocuments({});
-  return votesCount >= 5;
+  return votesCount >= 8;
 }
 
 async function checkResults(): Promise<'red' | 'blue' | 'yellow' | 'none'> {
@@ -76,7 +76,7 @@ async function checkResults(): Promise<'red' | 'blue' | 'yellow' | 'none'> {
     const votesCount = await cardbetsCollection.countDocuments({});
     const id = cookies().get('id')?.value;
 
-    if (votesCount >= 5) {
+    if (votesCount >= 8) {
       const redVotes = await cardbetsCollection.countDocuments({ card: 'red' });
       const blueVotes = await cardbetsCollection.countDocuments({ card: 'blue' });
       const yellowVotes = await cardbetsCollection.countDocuments({ card: 'yellow' });
