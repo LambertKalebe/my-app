@@ -1,4 +1,5 @@
-// page.tsx
+'use client'
+import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -17,8 +18,25 @@ interface User {
   money: number;
 }
 
-export default async function Leaderboard() {
-  const users = await getLeaderboardData();
+export default function Leaderboard() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getLeaderboardData();
+      setUsers(data);
+    };
+    fetchData();
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 1000); // Update every 1 second
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, []);
 
   return (
     <>
