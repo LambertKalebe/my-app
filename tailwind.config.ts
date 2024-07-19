@@ -22,6 +22,7 @@ const config = {
         'yelloww': '#FFD602',
         'redd': '#FF0030',
         'bluee': '#006FFF',
+        'purple': '#800080',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -45,18 +45,19 @@ async function createUser(name: string) {
       const usersCollection = db.collection('users');
   
       const newUser = {
-        id,
-        name,
-        money: 100,
-      };
+            id,
+            name,
+            money: 100,
+        };
   
       const result = await usersCollection.insertOne(newUser);
       console.log('Novo usuário criado com sucesso:', result.insertedId);
-      redirect('/')
+      
     } catch (error) {
       console.error('createUser: Erro ao criar novo usuário:', error);
       throw error;
     }
+    redirect('/')
   }
 
 export { checkMoney, createUser};

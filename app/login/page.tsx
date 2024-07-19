@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";;
 import { createUser } from "@/lib/userManager";
-
 export default function Login() {
     const usernameRef = useRef<HTMLInputElement>(null);
 
@@ -14,7 +13,6 @@ export default function Login() {
         const username = usernameRef.current?.value;
         if (username) {
             createUser(username);
-            
         } else {
             console.error("Username is required");
         }
@@ -29,20 +27,19 @@ export default function Login() {
                 <div className="grid gap-8 justify-center md:grid-cols-2 lg:grid-cols-2">
                     <div className="flex flex-col items-center justify-center">
                         <div className="mb-4 text-center">
-                            <h2 className="text-2xl font-bold">Welcome back!</h2>
-                            <p className="text-muted-foreground">Enter your username to login to your account.</p>
+                            <h2 className="text-2xl font-bold">Bem-Vindo!</h2>
+                            <p className="text-muted-foreground">Coloque seu nome ou apelido</p>
                         </div>
                         <div className="w-full max-w-md space-y-4">
                             <div>
-                                <Label htmlFor="username">Username</Label>
-                                <Input id="username" type="text" placeholder="Enter your username" ref={usernameRef} />
+                                <Input id="username" type="text" placeholder="Digite seu nome" ref={usernameRef} />
                             </div>
-                            <Button className="w-full" onClick={handleLogin}>Login</Button>
+                            <Button className="w-full" onClick={handleLogin}>Entrar</Button>
                         </div>
                     </div>
                     <div className="hidden md:flex flex-col items-center justify-center">
                         <Image
-                            src="/placeholder.svg"
+                            src="/patoDonald.gif"
                             width={600}
                             height={600}
                             alt="QR Code"
