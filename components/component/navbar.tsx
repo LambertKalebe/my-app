@@ -1,35 +1,49 @@
 'use client'
 import Link from "next/link"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
+  DropdownMenuSeparator, } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
-import { checkMoney } from "@/lib/userManager"
+import { checkMoney, checkName, logout } from "@/lib/userManager"
 
 export function Navbar() {
-  const [money, setMoney] = useState(100); // initialize money state to 100
+  const [money, setMoney] = useState(100); // Inicializa o estado de dinheiro em 100
+  const [name, setName] = useState("");
 
-  const [open, setOpen] = useState(false);
+  // Estados para controlar a abertura dos menus
+  const [openMenu1, setOpenMenu1] = useState(false);
+  const [openMenu2, setOpenMenu2] = useState(false);
+
+  const onClickEvent = () => {
+    logout();
+  };
   
   useEffect(() => {
     checkMoney().then(newMoney => {
-      setMoney(newMoney); // update money state with new value
+      setMoney(newMoney); // Atualiza o estado de dinheiro com o novo valor
     });
-  }, [open]);
+    checkName().then(newName => {
+      setName(newName); // Atualiza o estado de dinheiro com o novo valor
+    });
+  }, [openMenu2]); // Atualiza quando qualquer menu é aberto
 
   return (
     <header className="bg-background border-b px-4 lg:px-6 h-14 flex items-center justify-between">
       <Link href="/" className="flex items-center gap-2" prefetch={false}>
         <span className="text-lg font-semibold">MOSTRA</span>
       </Link>
-      <div>
-        <DropdownMenu open={open} onOpenChange={setOpen}>
+      <div className="flex gap-4"> {/* Adiciona a classe flex para organizar os menus lado a lado */}
+        {/* Primeiro Dropdown Menu */}
+        <DropdownMenu open={openMenu1} onOpenChange={setOpenMenu1}>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon">
               <MenuIcon className="h-6 w-6" />
-              <span className="sr-only">Mudar Menu</span>
+              <span className="sr-only">Mudar Menu 1</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuLabel>Páginas</DropdownMenuLabel>
+          <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Link href="/" className="flex items-center gap-2" prefetch={false}>
                 Início
@@ -45,8 +59,31 @@ export function Navbar() {
                 Sobre
               </Link>
             </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {/* Segundo Dropdown Menu */}
+        <DropdownMenu open={openMenu2} onOpenChange={setOpenMenu2}>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+              <MenuIcon2 className="h-6 w-6" />
+              <span className="sr-only">Mudar Menu 2</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuLabel>Usuário</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <div className="flex items-center justify-between">
+                {name}
+              </div>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               R$ {money}
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+            <Button variant="destructive" className="w-full" onClick={onClickEvent}>
+              <span>Sair</span>
+            </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -72,6 +109,26 @@ function MenuIcon(props: React.SVGAttributes<SVGElement>) {
       <line x1="4" x2="20" y1="12" y2="12" />
       <line x1="4" x2="20" y1="6" y2="6" />
       <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
+  );
+}
+
+function MenuIcon2(props: React.SVGAttributes<SVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
     </svg>
   );
 }

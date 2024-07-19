@@ -7,6 +7,9 @@ import React from "react";
 import Image from "next/image";
 import slotMachineManipulator from "@/lib/slotMachineManipuler";
 import { Navbar } from "@/components/component/navbar";
+import { checkMoney } from "@/lib/userManager";
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogAction } from "@/components/ui/alert-dialog"; // Importar AlertDialog
+import { HiOutlineQuestionMarkCircle } from "react-icons/hi"; // Importar ícone de interrogação
 
 const images = [
   '/seven.svg',   // ID 0
@@ -64,9 +67,14 @@ export default function Component() {
     }
   };
 
-  const handleSpin = (betValue: number) => {
+  const handleSpin = async(betValue: number) =>{
+    const userMoney = await checkMoney();
     if (!betValue) {
       alert('Selecione um valor de aposta!');
+      return;
+    }
+    if (betValue > userMoney) {
+      alert("Você não tem dinheiro suficiente para essa aposta.");
       return;
     }
     
@@ -151,9 +159,33 @@ export default function Component() {
                     Spin
                   </Button>
                 </div>
-                <div className="text-center">
+                <div className="text-center flex items-center justify-center">
                   <div className="text-2xl font-bold"></div>
-                  <div className="text-muted-foreground">Acerte 3 simbolos para ganhar!</div>
+                  <div className="text-muted-foreground">Acerte 3 símbolos para ganhar!</div>
+                  <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                      <Button variant="link" className="ml-2">
+                        <HiOutlineQuestionMarkCircle className="w-5 h-5" />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogTitle>Instruções</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Para ganhar, você precisa acertar 3 símbolos iguais em uma linha, coluna ou diagona. <br/>
+                        A seguir estão as recompensas de cada simbolo:
+                        <br/>
+                        <br/>
+                        <ul>
+                          <li>Sete: 7 vezes a bet</li>
+                          <li>Coração e Diamante: 3 vezes a bet</li>
+                          <li>Restantes: 2 vezes a bet</li>
+                        </ul>
+                        <br/>
+                        Boa Sorte!
+                      </AlertDialogDescription>
+                      <AlertDialogAction>Fechar</AlertDialogAction>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </CardContent>
             </Card>

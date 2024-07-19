@@ -2,6 +2,7 @@
 
 'use server';
 import { cookies } from "next/headers";
+import { ObjectId } from "mongodb"; // Importa ObjectId
 import { getDatabase } from './db';
 
 async function checkIfAlreadyVoted(): Promise<boolean> {
@@ -10,7 +11,12 @@ async function checkIfAlreadyVoted(): Promise<boolean> {
     const cardbetsCollection = db.collection('cardbets');
     const id = cookies().get('id')?.value;
 
-    const voteCheckResult = await cardbetsCollection.findOne({ id });
+    if (!id) {
+      console.error('checkIfAlreadyVoted: ID não encontrado nos cookies.');
+      return false;
+    }
+
+    const voteCheckResult = await cardbetsCollection.findOne({ id: new ObjectId(id) }); // Converte o id para ObjectId
     return voteCheckResult !== null;
   } catch (error) {
     console.error('checkIfAlreadyVoted: Erro ao verificar o voto:', error);
@@ -24,14 +30,15 @@ async function saveVote(card: string, betAmount: number): Promise<boolean> {
   const usersCollection = db.collection('users');
   const cardbetsCollection = db.collection('cardbets');
   const votesCount = await cardbetsCollection.countDocuments({});
-  const user = await usersCollection.findOne({ id });
-
+  
   if (!id) {
     console.error('saveVote: UUID do cookie não encontrado:', id);
     return false;
   }
 
   try {
+    const user = await usersCollection.findOne({ _id: new ObjectId(id) }); // Converte o id para ObjectId
+
     if (!user) {
       console.error('saveVote: Usuário não encontrado no banco de dados');
       return false;
@@ -48,10 +55,10 @@ async function saveVote(card: string, betAmount: number): Promise<boolean> {
     }
 
     // Subtrai o valor da aposta do dinheiro do usuário
-    await usersCollection.updateOne({ id }, { $inc: { money: -betAmount } });
+    await usersCollection.updateOne({ _id: new ObjectId(id) }, { $inc: { money: -betAmount } }); // Converte o id para ObjectId
 
     // Insere o voto na tabela cardbets
-    await cardbetsCollection.insertOne({ card, id, bet: betAmount });
+    await cardbetsCollection.insertOne({ card, id: new ObjectId(id), bet: betAmount }); // Converte o id para ObjectId
 
     console.log('Voto salvo com sucesso! Total De Votos: ' + votesCount);
     return true;
@@ -101,11 +108,11 @@ async function checkResults(): Promise<'red' | 'blue' | 'yellow' | 'none'> {
       console.log(`CARTÃO VENCEDOR: ${winningCard}`);
 
       // Verifica se o ID do usuário está presente em um voto do cartão vencedor
-      const userVote = await cardbetsCollection.findOne({ card: winningCard, id });
+      const userVote = await cardbetsCollection.findOne({ card: winningCard, id: new ObjectId(id) }); // Converte o id para ObjectId
       if (userVote && !userVote.rewarded) {
         // Multiplica o valor da aposta do usuário por 2 e soma ao dinheiro dele
         const updatedMoney = userVote.bet * 2;
-        await usersCollection.updateOne({ id }, { $inc: { money: updatedMoney } });
+        await usersCollection.updateOne({ _id: new ObjectId(id) }, { $inc: { money: updatedMoney } }); // Converte o id para ObjectId
         console.log(`Dinheiro do usuário ${id} atualizado: ${updatedMoney}`);
 
         // Marca o voto como recompensado

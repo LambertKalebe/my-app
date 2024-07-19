@@ -2,6 +2,7 @@
 'use server'
 import { getDatabase } from './db';
 import { cookies } from 'next/headers';
+import { ObjectId } from 'mongodb'; // Importar ObjectId
 
 const slotMachineManipulator = async (betAmount: number, winningImageId: number) => {
     const id = cookies().get('id')?.value;
@@ -14,15 +15,15 @@ const slotMachineManipulator = async (betAmount: number, winningImageId: number)
     const usersCollection = db.collection('users');
 
     try {
-        // Buscar o usuário no banco de dados
-        const user = await usersCollection.findOne({ id });
+        // Usar ObjectId para buscar o usuário no banco de dados
+        const user = await usersCollection.findOne({ _id: new ObjectId(id) });
 
         if (!user) {
             throw new Error('Usuário não encontrado, ID encontrado nos cookies: ' + id);
         }
 
         // Atualizar o dinheiro do usuário no banco de dados
-        await usersCollection.updateOne({ id }, { $inc: { money: -betAmount } });
+        await usersCollection.updateOne({ _id: new ObjectId(id) }, { $inc: { money: -betAmount } });
 
         // Verificar se houve vitória
         if (winningImageId !== -1) {
@@ -30,7 +31,7 @@ const slotMachineManipulator = async (betAmount: number, winningImageId: number)
             let winningAmount;
             switch (winningImageId) {
                 case 0: // '/seven.svg'
-                    winningAmount = betAmount + (betAmount * 7);
+                    winningAmount = betAmount * 7;
                     break;
                 case 1: // '/heart.svg'
                 case 2: // '/diamond.svg'
@@ -42,10 +43,10 @@ const slotMachineManipulator = async (betAmount: number, winningImageId: number)
             }
 
             // Atualizar o dinheiro do usuário no banco de dados com o prêmio
-            await usersCollection.updateOne({ id }, { $inc: { money: winningAmount } });
+            await usersCollection.updateOne({ _id: new ObjectId(id) }, { $inc: { money: winningAmount } });
             console.log(`Usuário ganhou $${winningAmount}!`);
         } else {
-            console.log("slotMachineManipulator: NAO FOI VITORIA");
+            console.log("slotMachineManipulator: NÃO FOI VITÓRIA");
         }
     } catch (error) {
         console.error('Erro ao manipular o slot machine:', error);

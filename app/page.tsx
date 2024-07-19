@@ -14,9 +14,9 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center">
             <Link href="/cardsluck" className="w-full h-full">
-              <div className="relative group overflow-hidden rounded-lg">
+              <div className="relative group overflow-hidden rounded-lg border border-white">
                 <Image
-                  src="/iconGame.png"
+                  src="/cardsLuckLogo.png"
                   alt="Game Wallpaper"
                   width={500}
                   height={500}
@@ -29,9 +29,9 @@ export default function Home() {
               <h2 className="text-center mt-2 text-lg font-semibold">CardsLuck</h2>
             </Link>
             <Link href="/slotmachine" className="w-full h-full">
-              <div className="relative group overflow-hidden rounded-lg">
+              <div className="relative group overflow-hidden rounded-lg border border-white">
                 <Image
-                  src="/iconGame.png"
+                  src="/TigerLogo.png"
                   alt="Game Wallpaper"
                   width={500}
                   height={500}
