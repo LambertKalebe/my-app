@@ -1,7 +1,7 @@
 // db.js
 'use server';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-const mongoUrl = process.env.MONGO_URI
+const mongoUrl = process.env.MONGODB_URI
 
 if (!mongoUrl) {
   throw new Error('MongoDB URL is not defined.');

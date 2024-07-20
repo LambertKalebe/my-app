@@ -72,7 +72,7 @@ export default function Login() {
                                     <button 
                                         type="button" 
                                         onClick={() => setShowPassword(!showPassword)} 
-                                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500"
+                                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-white-500"
                                     >
                                         {showPassword ? "Ocultar" : "Mostrar"}
                                     </button>
