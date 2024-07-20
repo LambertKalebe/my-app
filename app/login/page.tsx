@@ -38,7 +38,9 @@ export default function Login() {
             const response = await login(username, password);
             if (!response.success) {
                 alert(response.message); // Exibe o alerta em caso de erro
-            }
+            } else [
+                router.push('/')
+            ]
         } else {
             console.error("Username and Password are required");
             alert("Nome de usuário e senha são obrigatórios."); // Alerta para campos vazios
@@ -84,6 +86,8 @@ export default function Login() {
                     </div>
                     <div className="hidden md:flex flex-col items-center justify-center">
                         <Image
+                        loading  = 'eager'
+                            unoptimized
                             src="/patoDonald.gif"
                             width={600}
                             height={600}

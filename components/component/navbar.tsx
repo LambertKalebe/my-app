@@ -5,17 +5,19 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
 import { checkMoney, checkName, logout } from "@/lib/userManager"
-
+import { useRouter } from "next/navigation";
 export function Navbar() {
   const [money, setMoney] = useState(100); // Inicializa o estado de dinheiro em 100
   const [name, setName] = useState("");
-
+  const router = useRouter()
   // Estados para controlar a abertura dos menus
   const [openMenu1, setOpenMenu1] = useState(false);
   const [openMenu2, setOpenMenu2] = useState(false);
 
   const onClickEvent = () => {
+    
     logout();
+    router.push('/')
   };
   
   useEffect(() => {

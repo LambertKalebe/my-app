@@ -38,17 +38,8 @@ export default function Info() {
               className="w-full max-w-[300px] rounded-lg"
             />
             <div className="mt-4 flex gap-4">
-              <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                <TwitterIcon className="h-6 w-6" />
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
+              <Link href="https://www.instagram.com/kaka._lebe/" className="text-muted-foreground hover:underline" prefetch={false}>
                 <InstagramIcon className="h-6 w-6" />
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                <LinkedinIcon className="h-6 w-6" />
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                <GitlabIcon className="h-6 w-6" />
               </Link>
             </div>
           </div>
@@ -62,26 +53,17 @@ export default function Info() {
               alt="Assistente 1"
               className="w-full max-w-[300px] rounded-lg"
             />
-            <div className="mt-4 text-center">
+            <div className="flex mt-8 flex-col items-center justify-center">
               <h3 className="text-xl font-bold">Vinícius</h3>
               <p className="text-muted-foreground">Assistente na criação do Site.</p>
               <div className="mt-4 flex gap-4">
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                  <TwitterIcon className="h-6 w-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
+                <Link href="https://www.instagram.com/vinimontanhez/" className="text-muted-foreground hover:underline" prefetch={false}>
                   <InstagramIcon className="h-6 w-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                  <LinkedinIcon className="h-6 w-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                  <GitlabIcon className="h-6 w-6" />
                 </Link>
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex mt-8 flex-col items-center justify-center">
             <Image
               src="/placeholder.svg"
               width={300}
@@ -89,26 +71,17 @@ export default function Info() {
               alt="Assistente 2"
               className="w-full max-w-[300px] rounded-lg"
             />
-            <div className="mt-4 text-center">
+            <div className="flex mt-8 flex-col items-center justify-center">
               <h3 className="text-xl font-bold">Eduan</h3>
               <p className="text-muted-foreground">Assistente na criação do Site.</p>
               <div className="mt-4 flex gap-4">
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                  <TwitterIcon className="h-6 w-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
+                <Link href="https://www.instagram.com/eduan_carli/" className="text-muted-foreground hover:underline" prefetch={false}>
                   <InstagramIcon className="h-6 w-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                  <LinkedinIcon className="h-6 w-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                  <GitlabIcon className="h-6 w-6" />
                 </Link>
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex mt-8 flex-col items-center justify-center">
             <Image
               src="/placeholder.svg"
               width={300}
@@ -116,21 +89,12 @@ export default function Info() {
               alt="Assistente 2"
               className="w-full max-w-[300px] rounded-lg"
             />
-            <div className="mt-4 text-center">
-              <h3 className="text-xl font-bold">Natalia</h3>
+            <div className="flex mt-8 flex-col items-center justify-center">
+              <h3 className="text-xl font-bold">Natália</h3>
               <p className="text-muted-foreground">Artista.</p>
               <div className="mt-4 flex gap-4">
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                  <TwitterIcon className="h-6 w-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
+                <Link href="https://www.instagram.com/nat.ssntn/" className="text-muted-foreground hover:underline" prefetch={false}>
                   <InstagramIcon className="h-6 w-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                  <LinkedinIcon className="h-6 w-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:underline" prefetch={false}>
-                  <GitlabIcon className="h-6 w-6" />
                 </Link>
               </div>
             </div>

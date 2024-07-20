@@ -8,5 +8,11 @@ export async function getLeaderboardData() {
     .sort({ money: -1 })
     .limit(10)
     .toArray();
-  return users;
+
+  // Converte os dados dos usuários para um formato simples
+  return users.map((user: { _id: { toString: () => any; }; name: any; money: any; }) => ({
+    _id: user._id.toString(), // Converte o ObjectId para string
+    name: user.name,
+    money: user.money,
+  }));
 }

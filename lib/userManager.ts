@@ -111,7 +111,6 @@ async function login(name: string, password: string) {
 function logout() {
   cookies().delete('id');
   console.log('Usuário deslogado.');
-  redirect('/');
 }
 
 export { checkMoney, checkName, register, login, logout };

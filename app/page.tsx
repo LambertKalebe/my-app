@@ -23,7 +23,7 @@ export default function Home() {
                   className="aspect-square object-cover w-full h-full bg-color"
                 />
                 <div className="absolute inset-0 bg-primary/50 opacity-0 transition-opacity group-hover:opacity-100 flex items-center justify-center">
-                  <span className="text-primary-foreground font-medium">CardsLuck</span>
+                  <span className="text-primary-foreground font-medium text-white">JOGAR</span>
                 </div>
               </div>
               <h2 className="text-center mt-2 text-lg font-semibold">CardsLuck</h2>
@@ -38,7 +38,7 @@ export default function Home() {
                   className="aspect-square object-cover w-full h-full bg-color"
                 />
                 <div className="absolute inset-0 bg-primary/50 opacity-0 transition-opacity group-hover:opacity-100 flex items-center justify-center">
-                  <span className="text-primary-foreground font-medium">Tigrão</span>
+                  <span className="text-primary-foreground font-medium text-white">JOGAR</span>
                 </div>
               </div>
               <h2 className="text-center mt-2 text-lg font-semibold">Tigrão</h2>
