@@ -4,7 +4,9 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
   DropdownMenuSeparator, } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
-import { checkMoney, checkName, logout } from "@/lib/userManager"
+import checkMoney from "@/lib/checkMoney"
+import checkName from "@/lib/checkName"
+import logout from "@/lib/logout"
 import { useRouter } from "next/navigation";
 export function Navbar() {
   const [money, setMoney] = useState(100); // Inicializa o estado de dinheiro em 100
@@ -43,21 +45,21 @@ export function Navbar() {
               <span className="sr-only">Mudar Menu 1</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuContent align="end" className="w-30">
           <DropdownMenuLabel>Páginas</DropdownMenuLabel>
           <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href="/" className="flex items-center gap-2" prefetch={false}>
+              <Link href="/" className="flex items-center gap-2 w-full" prefetch={false}>
                 Início
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link href="/leaderboard" className="flex items-center gap-2" prefetch={false}>
+              <Link href="/leaderboard" className="flex items-center gap-2 w-full" prefetch={false}>
                 Placar
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link href="/info" className="flex items-center gap-2" prefetch={false}>
+              <Link href="/info" className="flex items-center gap-2 w-full" prefetch={false}>
                 Sobre
               </Link>
             </DropdownMenuItem>
@@ -71,7 +73,7 @@ export function Navbar() {
               <span className="sr-only">Mudar Menu 2</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuContent align="end" className="w-30">
           <DropdownMenuLabel>Usuário</DropdownMenuLabel>
           <DropdownMenuSeparator />
             <DropdownMenuItem>

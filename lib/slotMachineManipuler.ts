@@ -35,6 +35,8 @@ const slotMachineManipulator = async (betAmount: number, winningImageId: number)
                     break;
                 case 1: // '/heart.svg'
                 case 2: // '/diamond.svg'
+                case 3: // '/citrus.svg'
+                case 4: // '/coin.svg'
                     winningAmount = betAmount * 3;
                     break;
                 default:

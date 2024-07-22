@@ -7,7 +7,7 @@ import React from "react";
 import Image from "next/image";
 import slotMachineManipulator from "@/lib/slotMachineManipuler";
 import { Navbar } from "@/components/component/navbar";
-import { checkMoney } from "@/lib/userManager";
+import checkMoney from "@/lib/checkMoney";
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogAction } from "@/components/ui/alert-dialog"; // Importar AlertDialog
 import { HiOutlineQuestionMarkCircle } from "react-icons/hi"; // Importar ícone de interrogação
 
@@ -177,7 +177,7 @@ export default function Component() {
                         <br/>
                         <ul>
                           <li>Sete: 7 vezes a bet</li>
-                          <li>Coração e Diamante: 3 vezes a bet</li>
+                          <li>Coração, Diamante, Limão e Moeda: 3 vezes a bet</li>
                           <li>Restantes: 2 vezes a bet</li>
                         </ul>
                         <br/>

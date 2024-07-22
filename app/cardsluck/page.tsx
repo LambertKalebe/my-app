@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import { Navbar } from "@/components/component/navbar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import saveVote, {
-  checkIfAlreadyVoted,
-  VoteCount,
-  checkResults,
-} from "@/lib/gameManipuler";
-import { checkMoney } from "@/lib/userManager";
+
+import checkMoney from "@/lib/checkMoney";
+import checkIfAlreadyVoted from "@/lib/checkifArlreadyVoted";
+import saveVote from "@/lib/SaveVote";
+import VoteCount from "@/lib/voteCount";
+import checkResults from "@/lib/checkResults";
 
 export default function CardsLuckPage() {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);

@@ -3,7 +3,8 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
-import { register, login } from "@/lib/userManager";
+import register from "@/lib/register";
+import login from "@/lib/login";
 import { useRouter } from "next/navigation";
 
 export default function Login() {

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { deleteCollection } from "@/lib/gameManipuler";
+import deleteCollection from "@/lib/deleteCollection";
 
 export default function deleteCardBetsPage() {
   const handleDeleteClick = async () => {
