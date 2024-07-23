@@ -16,7 +16,7 @@ export default function Home() {
             <Link href="/cardsluck" className="w-full h-full">
               <div className="relative group overflow-hidden rounded-lg border border-white">
                 <Image
-                  src="/cardsLuckLogo.png"
+                  src="/cardsLuckLogo.webp"
                   alt="Game Wallpaper"
                   width={500}
                   height={500}
@@ -31,7 +31,7 @@ export default function Home() {
             <Link href="/slotmachine" className="w-full h-full">
               <div className="relative group overflow-hidden rounded-lg border border-white">
                 <Image
-                  src="/TigerLogo.png"
+                  src="/TigerLogo.webp"
                   alt="Game Wallpaper"
                   width={500}
                   height={500}

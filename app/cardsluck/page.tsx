@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Navbar } from "@/components/component/navbar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
+import Image from "next/image";
 import checkMoney from "@/lib/checkMoney";
 import checkIfAlreadyVoted from "@/lib/checkifArlreadyVoted";
 import saveVote from "@/lib/SaveVote";
@@ -81,7 +81,7 @@ export default function CardsLuckPage() {
         <div className="container">
           <div className="mb-8 md:mb-20 flex justify-center">
             <h1 className="text-3xl font-bold md:text-4xl">
-              Vote no seu cartão e teste sua sorte!
+              Sorteie um cartão!
             </h1>
           </div>
           <div className="flex justify-center">
@@ -95,8 +95,7 @@ export default function CardsLuckPage() {
                   className={`bg-bluee text-blue-900 shadow-current shadow-xl ${cardClasses(
                     "blue"
                   )}`}
-                  style={{ backgroundImage: "url('/blue.png')" }}
-                >
+                ><Image src={'/blue.webp'} alt="red" width={500} height={500}></Image>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
                     {winningCard === "blue" && <h1>VENCEDOR</h1>}
                   </CardContent>
@@ -111,8 +110,8 @@ export default function CardsLuckPage() {
                   className={`bg-redd text-red-900 shadow-current shadow-xl ${cardClasses(
                     "red"
                   )}`}
-                  style={{ backgroundImage: "url('/red.png')" }}
-                >
+                  
+                > <Image src={'/red.webp'} alt="red" width={500} height={500}></Image>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
                     {winningCard === "red" && <h1>VENCEDOR</h1>}
                   </CardContent>
@@ -127,8 +126,7 @@ export default function CardsLuckPage() {
                   className={`bg-yelloww text-yellow-900 shadow-current shadow-xl ${cardClasses(
                     "yellow"
                   )}`}
-                  style={{ backgroundImage: "url('/yellow.png')" }}
-                >
+                ><Image src={'/yellow.webp'} alt="red" width={500} height={500}></Image>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
                     {winningCard === "yellow" && <h1>VENCEDOR</h1>}
                   </CardContent>
