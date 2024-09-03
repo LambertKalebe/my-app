@@ -1,43 +1,52 @@
-'use client'
-import Link from "next/link"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
-  DropdownMenuSeparator, } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { useState, useEffect } from "react"
-import checkMoney from "@/lib/checkMoney"
-import checkName from "@/lib/checkName"
-import logout from "@/lib/logout"
+"use client";
+import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import checkMoney from "@/lib/checkMoney";
+import checkName from "@/lib/checkName";
+import logout from "@/lib/logout";
 import { useRouter } from "next/navigation";
+import isAdm from "@/lib/isAdm";
 export function Navbar() {
   const [money, setMoney] = useState(100); // Inicializa o estado de dinheiro em 100
   const [name, setName] = useState("");
-  const router = useRouter()
+  const router = useRouter();
   // Estados para controlar a abertura dos menus
   const [openMenu1, setOpenMenu1] = useState(false);
   const [openMenu2, setOpenMenu2] = useState(false);
+  const [checkIsAdm, setCheckIsAdm] = useState(false);
 
   const onClickEvent = () => {
-    
     logout();
-    router.push('/')
+    router.push("/");
   };
-  
+
   useEffect(() => {
-    checkMoney().then(newMoney => {
+    checkMoney().then((newMoney) => {
       setMoney(newMoney); // Atualiza o estado de dinheiro com o novo valor
     });
-    checkName().then(newName => {
-      setName(newName); // Atualiza o estado de dinheiro com o novo valor
+    checkName().then((newName) => {
+      setName(newName); // Atualiza o estado de nome com o novo valor
     });
-  }, [openMenu2]); // Atualiza quando qualquer menu é aberto
+    isAdm().then((isAdmin) => {
+      setCheckIsAdm(isAdmin); // Atualiza o estado de isAdm com o valor retornado
+    });
+  }, [openMenu2]); // Atualiza quando o menu 2 é aberto
 
   return (
     <header className="bg-background border-b px-4 lg:px-6 h-14 flex items-center justify-between">
       <Link href="/" className="flex items-center gap-2" prefetch={false}>
         <span className="text-lg font-semibold">MOSTRA</span>
       </Link>
-      <div className="flex gap-4"> {/* Adiciona a classe flex para organizar os menus lado a lado */}
-        {/* Primeiro Dropdown Menu */}
+      <div className="flex gap-4">
         <DropdownMenu open={openMenu1} onOpenChange={setOpenMenu1}>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon">
@@ -46,20 +55,32 @@ export function Navbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-30">
-          <DropdownMenuLabel>Páginas</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+            <DropdownMenuLabel>Páginas</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href="/" className="flex items-center gap-2 w-full" prefetch={false}>
+              <Link
+                href="/"
+                className="flex items-center gap-2 w-full"
+                prefetch={false}
+              >
                 Início
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link href="/leaderboard" className="flex items-center gap-2 w-full" prefetch={false}>
+              <Link
+                href="/leaderboard"
+                className="flex items-center gap-2 w-full"
+                prefetch={false}
+              >
                 Placar
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link href="/info" className="flex items-center gap-2 w-full" prefetch={false}>
+              <Link
+                href="/info"
+                className="flex items-center gap-2 w-full"
+                prefetch={false}
+              >
                 Sobre
               </Link>
             </DropdownMenuItem>
@@ -74,20 +95,32 @@ export function Navbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-30">
-          <DropdownMenuLabel>Usuário</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+            <DropdownMenuLabel>Usuário</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <div className="flex items-center justify-between">
-                {name}
-              </div>
+              <div className="flex items-center justify-between">{name}</div>
             </DropdownMenuItem>
+            <DropdownMenuItem>R$ {money}</DropdownMenuItem>
+            {checkIsAdm && (
+              <DropdownMenuItem>
+                <Link
+                  href="/Panel"
+                  className="flex items-center gap-2 w-full"
+                  prefetch={false}
+                >
+                  Menu ADM
+                </Link>
+              </DropdownMenuItem>
+            )}
+
             <DropdownMenuItem>
-              R$ {money}
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-            <Button variant="destructive" className="w-full" onClick={onClickEvent}>
-              <span>Sair</span>
-            </Button>
+              <Button
+                variant="destructive"
+                className="w-full"
+                onClick={onClickEvent}
+              >
+                <span>Sair</span>
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

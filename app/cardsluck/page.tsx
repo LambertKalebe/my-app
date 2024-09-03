@@ -7,8 +7,8 @@ import Image from "next/image";
 import checkMoney from "@/lib/checkMoney";
 import checkIfAlreadyVoted from "@/lib/checkifArlreadyVoted";
 import saveVote from "@/lib/SaveVote";
-import VoteCount from "@/lib/voteCount";
 import checkResults from "@/lib/checkResults";
+import gameIsFinished from "@/lib/gameIsFinished";
 
 export default function CardsLuckPage() {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
@@ -28,8 +28,8 @@ export default function CardsLuckPage() {
   }, []);
 
   const handleCardClick = async (card: string) => {
-    if (await VoteCount()) {
-      alert("Limite de votos atingido");
+    if (await gameIsFinished()) {
+      alert("Fim De Jogo");
     }
     setSelectedCard(card);
   };
@@ -95,7 +95,13 @@ export default function CardsLuckPage() {
                   className={`bg-bluee text-blue-900 shadow-current shadow-xl ${cardClasses(
                     "blue"
                   )}`}
-                ><Image src={'/blue.webp'} alt="red" width={500} height={500}></Image>
+                >
+                  <Image
+                    src={"/blue.webp"}
+                    alt="red"
+                    width={500}
+                    height={500}
+                  ></Image>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
                     {winningCard === "blue" && <h1>VENCEDOR</h1>}
                   </CardContent>
@@ -110,8 +116,14 @@ export default function CardsLuckPage() {
                   className={`bg-redd text-red-900 shadow-current shadow-xl ${cardClasses(
                     "red"
                   )}`}
-                  
-                > <Image src={'/red.webp'} alt="red" width={500} height={500}></Image>
+                >
+                  {" "}
+                  <Image
+                    src={"/red.webp"}
+                    alt="red"
+                    width={500}
+                    height={500}
+                  ></Image>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
                     {winningCard === "red" && <h1>VENCEDOR</h1>}
                   </CardContent>
@@ -126,7 +138,13 @@ export default function CardsLuckPage() {
                   className={`bg-yelloww text-yellow-900 shadow-current shadow-xl ${cardClasses(
                     "yellow"
                   )}`}
-                ><Image src={'/yellow.webp'} alt="red" width={500} height={500}></Image>
+                >
+                  <Image
+                    src={"/yellow.webp"}
+                    alt="red"
+                    width={500}
+                    height={500}
+                  ></Image>
                   <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
                     {winningCard === "yellow" && <h1>VENCEDOR</h1>}
                   </CardContent>
