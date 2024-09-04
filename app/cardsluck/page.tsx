@@ -37,6 +37,7 @@ export default function CardsLuckPage() {
     if (await gameIsFinished()) {
       alert("Fim De Jogo");
     }
+    setSelectedCard(null);
     setSelectedCard(card);
   };
 
@@ -58,7 +59,7 @@ export default function CardsLuckPage() {
         const voteSuccess = await saveVote(selectedCard, betAmount);
         if (voteSuccess) {
           // Limpar as seleções após salvar
-          setSelectedCard(null);
+
           setSelectedButton(null);
           setBetAmount(null);
         }
