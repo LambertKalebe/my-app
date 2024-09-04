@@ -14,6 +14,7 @@ export default function CardsLuckPage() {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
   const [isConfirmDisabled, setIsConfirmDisabled] = useState<boolean>(false);
+  const [betAmount, setBetAmount] = useState<number | null>(null);
   const [winningCard, setWinningCard] = useState<
     "red" | "blue" | "yellow" | "none"
   >("none");
@@ -48,6 +49,7 @@ export default function CardsLuckPage() {
       } else if (await checkIfAlreadyVoted()) {
         setIsConfirmDisabled(true);
       } else {
+        setIsConfirmDisabled(true);
         const voteSuccess = await saveVote(selectedCard, betAmount);
         if (voteSuccess) {
           // Clear the selections after saving
@@ -81,9 +83,22 @@ export default function CardsLuckPage() {
         <div className="container">
           <div className="mb-8 md:mb-20 flex justify-center">
             <h1 className="text-3xl font-bold md:text-4xl">
-              Sorteie um cartão!
+              {selectedCard && winningCard !== "none"
+                ? selectedCard === winningCard
+                  ? `PARABÉNS, VOCÊ GANHOU: R$ ${(betAmount ?? 0) * 2}`
+                  : `PERDEU! O Cartão vencedor foi: ${
+                      winningCard === "red"
+                        ? "Vermelho"
+                        : winningCard === "blue"
+                        ? "Azul"
+                        : winningCard === "yellow"
+                        ? "Amarelo"
+                        : "Nenhum"
+                    }`
+                : "Sorteie um cartão!"}
             </h1>
           </div>
+
           <div className="flex justify-center">
             <div className="grid grid-cols-3 gap-4">
               <div
@@ -102,8 +117,8 @@ export default function CardsLuckPage() {
                     width={500}
                     height={500}
                   ></Image>
-                  <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
-                    {winningCard === "blue" && <h1>VENCEDOR</h1>}
+                  <CardContent className="flex items-center justify-center p-6 bg-opacity-50 text-white">
+                    {winningCard === "blue" && <h1>Cartão Sorteado</h1>}
                   </CardContent>
                 </Card>
               </div>
@@ -124,8 +139,8 @@ export default function CardsLuckPage() {
                     width={500}
                     height={500}
                   ></Image>
-                  <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
-                    {winningCard === "red" && <h1>VENCEDOR</h1>}
+                  <CardContent className="flex items-center justify-center p-6 bg-opacity-50 text-white">
+                    {winningCard === "red" && <h1>Cartão Sorteado</h1>}
                   </CardContent>
                 </Card>
               </div>
@@ -145,8 +160,8 @@ export default function CardsLuckPage() {
                     width={500}
                     height={500}
                   ></Image>
-                  <CardContent className="flex items-center justify-center p-6 bg-opacity-50">
-                    {winningCard === "yellow" && <h1>VENCEDOR</h1>}
+                  <CardContent className="flex items-center justify-center p-6 bg-opacity-50 text-white">
+                    {winningCard === "yellow" && <h1>Cartão Sorteado</h1>}
                   </CardContent>
                 </Card>
               </div>

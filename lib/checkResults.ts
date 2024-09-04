@@ -9,7 +9,6 @@ async function checkResults(): Promise<"red" | "blue" | "yellow" | "none"> {
     const db = await getDatabase();
     const cardbetsCollection = db.collection("cardbets");
     const usersCollection = db.collection("users");
-    const votesCount = await cardbetsCollection.countDocuments({});
     const id = cookies().get("id")?.value;
     const jogoAcabou = await gameIsFinished();
 
