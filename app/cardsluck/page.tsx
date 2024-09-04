@@ -23,10 +23,15 @@ export default function CardsLuckPage() {
     const interval = setInterval(async () => {
       const cardColor = await checkResults();
       setWinningCard(cardColor);
+
+      // Atualiza o betAmount se uma aposta foi feita
+      if (selectedButton) {
+        setBetAmount(parseInt(selectedButton));
+      }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [selectedButton]);
 
   const handleCardClick = async (card: string) => {
     if (await gameIsFinished()) {
@@ -52,9 +57,10 @@ export default function CardsLuckPage() {
         setIsConfirmDisabled(true);
         const voteSuccess = await saveVote(selectedCard, betAmount);
         if (voteSuccess) {
-          // Clear the selections after saving
+          // Limpar as seleções após salvar
           setSelectedCard(null);
           setSelectedButton(null);
+          setBetAmount(null);
         }
       }
     } else {
@@ -113,11 +119,11 @@ export default function CardsLuckPage() {
                 >
                   <Image
                     src={"/blue.webp"}
-                    alt="red"
+                    alt="blue"
                     width={500}
                     height={500}
-                  ></Image>
-                  <CardContent className="flex items-center justify-center p-6 bg-opacity-50 text-white">
+                  />
+                  <CardContent className="flex flex-col items-center justify-center p-6 bg-opacity-50 text-white">
                     {winningCard === "blue" && <h1>Cartão Sorteado</h1>}
                   </CardContent>
                 </Card>
@@ -132,14 +138,8 @@ export default function CardsLuckPage() {
                     "red"
                   )}`}
                 >
-                  {" "}
-                  <Image
-                    src={"/red.webp"}
-                    alt="red"
-                    width={500}
-                    height={500}
-                  ></Image>
-                  <CardContent className="flex items-center justify-center p-6 bg-opacity-50 text-white">
+                  <Image src={"/red.webp"} alt="red" width={500} height={500} />
+                  <CardContent className="flex flex-col items-center justify-center p-6 bg-opacity-50 text-white">
                     {winningCard === "red" && <h1>Cartão Sorteado</h1>}
                   </CardContent>
                 </Card>
@@ -156,17 +156,18 @@ export default function CardsLuckPage() {
                 >
                   <Image
                     src={"/yellow.webp"}
-                    alt="red"
+                    alt="yellow"
                     width={500}
                     height={500}
-                  ></Image>
-                  <CardContent className="flex items-center justify-center p-6 bg-opacity-50 text-white">
+                  />
+                  <CardContent className="flex flex-col items-center justify-center p-6 bg-opacity-50 text-white">
                     {winningCard === "yellow" && <h1>Cartão Sorteado</h1>}
                   </CardContent>
                 </Card>
               </div>
             </div>
           </div>
+
           <div className="flex flex-col items-center justify-center mt-20">
             <div className="mb-4 text-center">
               <h2 className="text-2xl font-bold">Digite sua aposta</h2>
